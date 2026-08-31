@@ -1,24 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getUserById } from '../../../lib/userStore';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
 export async function GET(_req: NextRequest, ctx: RouteContext) {
-  const { id } = await ctx.params;
-  const numId = Number(id);
+  try {
+    const { id } = await ctx.params;
+    const numId = Number(id);
 
-  if (isNaN(numId)) {
-    return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
+    if (isNaN(numId)) {
+      return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
+    }
+
+    const user = await getUserById(numId);
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    console.error('GET /api/users/[id] error:', error);
+    return NextResponse.json({ error: 'Failed to fetch user' }, { status: 500 });
   }
-
-  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${numId}`);
-  if (!res.ok) {
-    return NextResponse.json({ error: 'User not found' }, { status: 404 });
-  }
-
-  const user = await res.json();
-  return NextResponse.json(user);
 }
 
 export async function PUT(req: NextRequest, ctx: RouteContext) {

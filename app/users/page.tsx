@@ -18,7 +18,7 @@ interface Props {
 // When getting fresh data every 10 seconds
 const Userspage = async ({ searchParams }: Props) => {
   const { sortOrder } = await searchParams;
-  const res = await fetch('https://jsonplaceholder.typicode.com/users', {
+  const res = await fetch('http://localhost:3000/api/users', {
     next: { revalidate: 10 },
   });
   const users: User[] = await res.json();

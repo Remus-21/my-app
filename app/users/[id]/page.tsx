@@ -4,21 +4,7 @@ import { notFound } from 'next/navigation';
 interface UserDetail {
   id: number;
   name: string;
-  username: string;
   email: string;
-  phone: string;
-  website: string;
-  company?: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-  address?: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-  };
 }
 
  interface Props {
@@ -32,7 +18,7 @@ const UserDetailPage = async ({ params }: Props) => {
     notFound();
   }
 
-  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+  const res = await fetch(`http://localhost:3000/api/users/${id}`, {
     next: { revalidate: 10 },
   });
 
@@ -58,7 +44,7 @@ const UserDetailPage = async ({ params }: Props) => {
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-base-200 pb-4">
             <div>
               <h1 className="card-title text-2xl font-bold">{user.name}</h1>
-              <p className="text-sm text-base-content/70">@{user.username}</p>
+              <p className="text-sm text-base-content/70">ID: {user.id}</p>
             </div>
             <a
               href={`mailto:${user.email}`}
@@ -76,40 +62,7 @@ const UserDetailPage = async ({ params }: Props) => {
                   <span className="font-semibold text-base-content/70">Email:</span>{' '}
                   <span className="font-mono">{user.email}</span>
                 </p>
-                <p>
-                  <span className="font-semibold text-base-content/70">Phone:</span>{' '}
-                  <span>{user.phone}</span>
-                </p>
-                <p>
-                  <span className="font-semibold text-base-content/70">Website:</span>{' '}
-                  <a
-                    href={`https://${user.website}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link link-primary"
-                  >
-                    {user.website}
-                  </a>
-                </p>
               </div>
-            </div>
-
-            <div className="space-y-3">
-              <h2 className="text-lg font-semibold text-primary">Company</h2>
-              <div className="space-y-1 text-sm">
-                <p className="font-semibold text-base-content">{user.company?.name || 'N/A'}</p>
-                <p className="italic text-base-content/70">
-                  {user.company?.catchPhrase ? `"${user.company.catchPhrase}"` : ''}
-                </p>
-                <p className="text-xs text-base-content/60">{user.company?.bs || ''}</p>
-              </div>
-            </div>
-
-            <div className="space-y-3 md:col-span-2 border-t border-base-200 pt-4">
-              <h2 className="text-lg font-semibold text-primary">Address</h2>
-              <p className="text-sm text-base-content/80">
-                {user.address ? `${user.address.suite}, ${user.address.street}, ${user.address.city} (${user.address.zipcode})` : 'N/A'}
-              </p>
             </div>
           </div>
         </div>

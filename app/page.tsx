@@ -7,10 +7,10 @@ export default function Home() {
       <div className="hero bg-base-200 p-8 rounded-2xl">
         <div className="hero-content text-center">
           <div className="max-w-md">
-            <h1 className="text-4xl font-extrabold text-base-content mb-4">Hello World</h1>
-            <p className="py-2 text-base-content/80">
+            <h1 className="text-4xl font-extrabold text-base-content mb-4">Commerce</h1>
+            {/* <p className="py-2 text-base-content/80">
               Welcome to the full-stack Next.js App Router application built with Tailwind CSS and DaisyUI.
-            </p>
+            </p> */}
             <div className="flex justify-center gap-3 mt-4">
               <Link href="/users" className="btn btn-primary">
                 View Users

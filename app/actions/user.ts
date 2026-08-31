@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { addUser } from '../lib/userStore';
 
 export interface FormState {
   errors?: {
@@ -35,23 +36,17 @@ export async function createUserAction(
   }
 
   try {
-    const res = await fetch('https://jsonplaceholder.typicode.com/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email }),
-    });
-
-    if (!res.ok) {
-      return {
-        errors: { general: ['Failed to create user. Please try again.'] },
-      };
-    }
-  } catch {
+    console.log('Creating user:', { name, email });
+    const result = await addUser(name, email);
+    console.log('User created successfully:', result);
+  } catch (error) {
+    console.error('User creation error:', error);
     return {
-      errors: { general: ['Network error occurred while creating user.'] },
+      errors: { general: ['Error occurred while creating user.'] },
     };
   }
 
+  console.log('Revalidating path and redirecting to /users');
   revalidatePath('/users');
   redirect('/users');
 }
