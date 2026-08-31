@@ -1,14 +1,23 @@
 'use client';
-import React from 'react'
+import React from 'react';
+import { useCart } from '../context/CartContext';
 
 const AddToCart = () => {
+  const { addToCart } = useCart();
+
+  const handleClick = () => {
+    console.log('Click');
+    addToCart();
+  };
+
   return (
     <div>
-        <button  className='btn btn-primary' onClick={() => console.log('Click')}>Add to Cart</button>
+      <button className="btn btn-primary" onClick={handleClick}>
+        Add to Cart
+      </button>
     </div>
-      
-    
-  )
-}
+  );
+};
 
-export default AddToCart
+export default AddToCart;
+
