@@ -8,5 +8,15 @@
     "id": 2,
     "name": "Mary Smith",
     "email": "marysmith@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Terry Smith",
+    "email": "terrysmith@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "Erick Were",
+    "email": "erickwereL@gmail.com"
   }
 ]
